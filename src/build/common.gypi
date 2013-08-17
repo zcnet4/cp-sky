@@ -1839,7 +1839,7 @@
           'NTDDI_VERSION=0x06020000',
         ],
         'include_dirs': [
-          '<(DEPTH)/third_party/wtl/include',
+          #'<(DEPTH)/third_party/wtl/include',
         ],
         'conditions': [
           ['win_z7!=0', {
@@ -3697,10 +3697,10 @@
           }],
         ],
         'msvs_system_include_dirs': [
-          '<(windows_sdk_path)/Include/shared',
-          '<(windows_sdk_path)/Include/um',
-          '<(windows_sdk_path)/Include/winrt',
-          '<(directx_sdk_path)/Include',
+          #'<(windows_sdk_path)/Include/shared',
+          #'<(windows_sdk_path)/Include/um',
+          #'<(windows_sdk_path)/Include/winrt',
+          #'<(directx_sdk_path)/Include',
           '$(VSInstallDir)/VC/atlmfc/include',
         ],
         'msvs_cygwin_dirs': ['<(DEPTH)/third_party/cygwin'],
@@ -3732,8 +3732,8 @@
           'VCLibrarianTool': {
             'AdditionalOptions': ['/ignore:4221'],
             'AdditionalLibraryDirectories': [
-              '<(directx_sdk_path)/Lib/x86',
-              '<(windows_sdk_path)/Lib/win8/um/x86',
+              #'<(directx_sdk_path)/Lib/x86',
+              #'<(windows_sdk_path)/Lib/win8/um/x86',
             ],
           },
           'VCLinkerTool': {
@@ -3764,8 +3764,8 @@
               }],
             ],
             'AdditionalLibraryDirectories': [
-              '<(directx_sdk_path)/Lib/x86',
-              '<(windows_sdk_path)/Lib/win8/um/x86',
+              #'<(directx_sdk_path)/Lib/x86',
+              #'<(windows_sdk_path)/Lib/win8/um/x86',
             ],
             'GenerateDebugInformation': 'true',
             'MapFileName': '$(OutDir)\\$(TargetName).map',
