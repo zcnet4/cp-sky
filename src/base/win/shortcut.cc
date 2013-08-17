@@ -124,12 +124,17 @@ bool CreateOrUpdateShortcutLink(const FilePath& shortcut_path,
         !SetAppIdForPropertyStore(property_store, properties.app_id.c_str())) {
       return false;
     }
-    if (has_dual_mode &&
+    /*if (has_dual_mode &&
         !SetBooleanValueForPropertyStore(property_store,
                                          PKEY_AppUserModel_IsDualMode,
                                          properties.dual_mode)) {
       return false;
-    }
+    }*/
+	// ÔÝÊ±ÕâÑù¡£by ZC.
+	if (has_dual_mode) {
+		return false;
+	}
+	
   }
 
   HRESULT result = i_persist_file->Save(shortcut_path.value().c_str(), TRUE);

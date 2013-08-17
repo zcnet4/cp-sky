@@ -316,6 +316,7 @@
           'platform_file_posix.cc',
           'platform_file_win.cc',
           'port.h',
+          'port_zcnet4.h',
           'posix/eintr_wrapper.h',
           'posix/global_descriptors.cc',
           'posix/global_descriptors.h',

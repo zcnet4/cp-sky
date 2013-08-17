@@ -112,9 +112,10 @@ wchar_t* LocalAllocAndCopyString(const string16& src) {
 }
 
 bool IsTouchEnabled() {
-  int value = GetSystemMetrics(SM_DIGITIZER);
+  /*int value = GetSystemMetrics(SM_DIGITIZER);
   return (value & (NID_READY | NID_INTEGRATED_TOUCH)) ==
-             (NID_READY | NID_INTEGRATED_TOUCH);
+             (NID_READY | NID_INTEGRATED_TOUCH);*/
+	return false;
 }
 
 bool IsParentalControlActivityLoggingOn() {

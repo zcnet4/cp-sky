@@ -156,10 +156,12 @@ bool SetAppIdForPropertyStore(IPropertyStore* property_store,
   // format is CompanyName.ProductName[.SubProduct.ProductNumber].
   // See http://msdn.microsoft.com/en-us/library/dd378459%28VS.85%29.aspx
   DCHECK(lstrlen(app_id) < 64 && wcschr(app_id, L' ') == NULL);
-
+  /*
   return SetStringValueForPropertyStore(property_store,
                                         PKEY_AppUserModel_ID,
                                         app_id);
+  */
+  return false;
 }
 
 static const char16 kAutoRunKeyPath[] =
@@ -208,6 +210,7 @@ void SetAbortBehaviorForCrashReporting() {
 bool IsMachineATablet() {
   if (base::win::GetVersion() < base::win::VERSION_WIN7)
     return false;
+#if 0
   const int kMultiTouch = NID_INTEGRATED_TOUCH | NID_MULTI_INPUT | NID_READY;
   const int kMaxTabletScreenWidth = 1366;
   const int kMaxTabletScreenHeight = 768;
@@ -220,6 +223,7 @@ bool IsMachineATablet() {
         (cx <= kMaxTabletScreenWidth && cy <= kMaxTabletScreenHeight) :
         (cy <= kMaxTabletScreenWidth && cx <= kMaxTabletScreenHeight);
   }
+#endif
   return false;
 }
 

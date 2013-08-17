@@ -51,4 +51,6 @@
 #define API_CALL
 #endif
 
+#include "port_zcnet4.h"
+
 #endif  // BASE_PORT_H_
