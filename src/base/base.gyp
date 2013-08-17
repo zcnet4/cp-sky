@@ -396,16 +396,16 @@
     # },
     # Include this target for a main() function that simply instantiates
     # and runs a base::TestSuite.
-    {
-      'target_name': 'run_all_unittests',
-      'type': 'static_library',
-      'dependencies': [
-        'test_support_base',
-      ],
-      'sources': [
-        'test/run_all_unittests.cc',
-      ],
-    },
+    # {
+      # 'target_name': 'run_all_unittests',
+      # 'type': 'static_library',
+      # 'dependencies': [
+        # 'test_support_base',
+      # ],
+      # 'sources': [
+        # 'test/run_all_unittests.cc',
+      # ],
+    # },
     {
       'target_name': 'base_unittests',
       'type': '<(gtest_target_type)',
@@ -587,8 +587,8 @@
         'base',
         'base_i18n',
         'base_static',
-        'run_all_unittests',
-        'test_support_base',
+        #'run_all_unittests',
+        #'test_support_base',
         'third_party/dynamic_annotations/dynamic_annotations.gyp:dynamic_annotations',
         #'../testing/gmock.gyp:gmock',
         #'../testing/gtest.gyp:gtest',
@@ -729,139 +729,139 @@
         }],
       ],  # target_conditions
     },
-    {
-      'target_name': 'test_support_base',
-      'type': 'static_library',
-      'dependencies': [
-        'base',
-        'base_static',
-        'base_i18n',
-        #'../testing/gmock.gyp:gmock',
-        #'../testing/gtest.gyp:gtest',
-      ],
-      'export_dependent_settings': [
-        'base',
-      ],
-      'conditions': [
-        ['toolkit_uses_gtk==1', {
-          'dependencies': [
-            # test_suite initializes GTK.
-            '../build/linux/system.gyp:gtk',
-          ],
-        }],
-        ['os_posix==0', {
-          'sources!': [
-            'test/scoped_locale.cc',
-            'test/scoped_locale.h',
-          ],
-        }],
-        ['os_bsd==1', {
-          'sources!': [
-            'test/test_file_util_linux.cc',
-          ],
-        }],
-        ['OS=="win"', {
-          'direct_dependent_settings': {
-            'msvs_settings': {
-              'VCLinkerTool': {
-                'DelayLoadDLLs': [
-                  'propsys.dll',
-                ],
-              },
-            },
-          },
-        }],
-      ],
-      'sources': [
-        'perftimer.cc',
-        'test/main_hook.cc',
-        'test/main_hook.h',
-        'test/main_hook_ios.mm',
-        'test/mock_chrome_application_mac.h',
-        'test/mock_chrome_application_mac.mm',
-        'test/mock_devices_changed_observer.cc',
-        'test/mock_devices_changed_observer.h',
-        'test/mock_time_provider.cc',
-        'test/mock_time_provider.h',
-        'test/multiprocess_test.cc',
-        'test/multiprocess_test.h',
-        'test/multiprocess_test_android.cc',
-        'test/perf_test_suite.cc',
-        'test/perf_test_suite.h',
-        'test/scoped_locale.cc',
-        'test/scoped_locale.h',
-        'test/scoped_path_override.cc',
-        'test/scoped_path_override.h',
-        'test/sequenced_task_runner_test_template.cc',
-        'test/sequenced_task_runner_test_template.h',
-        'test/task_runner_test_template.cc',
-        'test/task_runner_test_template.h',
-        'test/test_file_util.h',
-        'test/test_file_util_linux.cc',
-        'test/test_file_util_mac.cc',
-        'test/test_file_util_posix.cc',
-        'test/test_file_util_win.cc',
-        'test/test_listener_ios.h',
-        'test/test_listener_ios.mm',
-        'test/test_reg_util_win.cc',
-        'test/test_reg_util_win.h',
-        'test/test_shortcut_win.cc',
-        'test/test_shortcut_win.h',
-        'test/test_suite.cc',
-        'test/test_suite.h',
-        'test/test_support_android.cc',
-        'test/test_support_android.h',
-        'test/test_support_ios.h',
-        'test/test_support_ios.mm',
-        'test/test_switches.cc',
-        'test/test_switches.h',
-        'test/test_timeouts.cc',
-        'test/test_timeouts.h',
-        'test/thread_test_helper.cc',
-        'test/thread_test_helper.h',
-        'test/trace_event_analyzer.cc',
-        'test/trace_event_analyzer.h',
-        'test/values_test_util.cc',
-        'test/values_test_util.h',
-      ],
-      'target_conditions': [
-        ['OS == "ios"', {
-          'sources/': [
-            # Pull in specific Mac files for iOS (which have been filtered out
-            # by file name rules).
-            ['include', '^test/test_file_util_mac\\.cc$'],
-          ],
-        }],
-      ],  # target_conditions
-    },
-    {
-      'target_name': 'test_support_perf',
-      'type': 'static_library',
-      'dependencies': [
-        'base',
-        #'../testing/gtest.gyp:gtest',
-      ],
-      'sources': [
-        'perftimer.cc',
-        'test/run_all_perftests.cc',
-      ],
-      'direct_dependent_settings': {
-        'defines': [
-          'PERF_TEST',
-        ],
-      },
-      'conditions': [
-        ['toolkit_uses_gtk==1', {
-          'dependencies': [
-            # Needed to handle the #include chain:
-            #   base/test/perf_test_suite.h
-            #   base/test/test_suite.h
-            #   gtk/gtk.h
-            '../build/linux/system.gyp:gtk',
-          ],
-        }],
-      ],
-    },
+    # {
+      # 'target_name': 'test_support_base',
+      # 'type': 'static_library',
+      # 'dependencies': [
+        # 'base',
+        # 'base_static',
+        # 'base_i18n',
+        # #'../testing/gmock.gyp:gmock',
+        # #'../testing/gtest.gyp:gtest',
+      # ],
+      # 'export_dependent_settings': [
+        # 'base',
+      # ],
+      # 'conditions': [
+        # ['toolkit_uses_gtk==1', {
+          # 'dependencies': [
+            # # test_suite initializes GTK.
+            # '../build/linux/system.gyp:gtk',
+          # ],
+        # }],
+        # ['os_posix==0', {
+          # 'sources!': [
+            # 'test/scoped_locale.cc',
+            # 'test/scoped_locale.h',
+          # ],
+        # }],
+        # ['os_bsd==1', {
+          # 'sources!': [
+            # 'test/test_file_util_linux.cc',
+          # ],
+        # }],
+        # ['OS=="win"', {
+          # 'direct_dependent_settings': {
+            # 'msvs_settings': {
+              # 'VCLinkerTool': {
+                # 'DelayLoadDLLs': [
+                  # 'propsys.dll',
+                # ],
+              # },
+            # },
+          # },
+        # }],
+      # ],
+      # 'sources': [
+        # 'perftimer.cc',
+        # 'test/main_hook.cc',
+        # 'test/main_hook.h',
+        # 'test/main_hook_ios.mm',
+        # 'test/mock_chrome_application_mac.h',
+        # 'test/mock_chrome_application_mac.mm',
+        # 'test/mock_devices_changed_observer.cc',
+        # 'test/mock_devices_changed_observer.h',
+        # 'test/mock_time_provider.cc',
+        # 'test/mock_time_provider.h',
+        # 'test/multiprocess_test.cc',
+        # 'test/multiprocess_test.h',
+        # 'test/multiprocess_test_android.cc',
+        # 'test/perf_test_suite.cc',
+        # 'test/perf_test_suite.h',
+        # 'test/scoped_locale.cc',
+        # 'test/scoped_locale.h',
+        # 'test/scoped_path_override.cc',
+        # 'test/scoped_path_override.h',
+        # 'test/sequenced_task_runner_test_template.cc',
+        # 'test/sequenced_task_runner_test_template.h',
+        # 'test/task_runner_test_template.cc',
+        # 'test/task_runner_test_template.h',
+        # 'test/test_file_util.h',
+        # 'test/test_file_util_linux.cc',
+        # 'test/test_file_util_mac.cc',
+        # 'test/test_file_util_posix.cc',
+        # 'test/test_file_util_win.cc',
+        # 'test/test_listener_ios.h',
+        # 'test/test_listener_ios.mm',
+        # 'test/test_reg_util_win.cc',
+        # 'test/test_reg_util_win.h',
+        # 'test/test_shortcut_win.cc',
+        # 'test/test_shortcut_win.h',
+        # 'test/test_suite.cc',
+        # 'test/test_suite.h',
+        # 'test/test_support_android.cc',
+        # 'test/test_support_android.h',
+        # 'test/test_support_ios.h',
+        # 'test/test_support_ios.mm',
+        # 'test/test_switches.cc',
+        # 'test/test_switches.h',
+        # 'test/test_timeouts.cc',
+        # 'test/test_timeouts.h',
+        # 'test/thread_test_helper.cc',
+        # 'test/thread_test_helper.h',
+        # 'test/trace_event_analyzer.cc',
+        # 'test/trace_event_analyzer.h',
+        # 'test/values_test_util.cc',
+        # 'test/values_test_util.h',
+      # ],
+      # 'target_conditions': [
+        # ['OS == "ios"', {
+          # 'sources/': [
+            # # Pull in specific Mac files for iOS (which have been filtered out
+            # # by file name rules).
+            # ['include', '^test/test_file_util_mac\\.cc$'],
+          # ],
+        # }],
+      # ],  # target_conditions
+    # },
+    # {
+      # 'target_name': 'test_support_perf',
+      # 'type': 'static_library',
+      # 'dependencies': [
+        # 'base',
+        # #'../testing/gtest.gyp:gtest',
+      # ],
+      # 'sources': [
+        # 'perftimer.cc',
+        # 'test/run_all_perftests.cc',
+      # ],
+      # 'direct_dependent_settings': {
+        # 'defines': [
+          # 'PERF_TEST',
+        # ],
+      # },
+      # 'conditions': [
+        # ['toolkit_uses_gtk==1', {
+          # 'dependencies': [
+            # # Needed to handle the #include chain:
+            # #   base/test/perf_test_suite.h
+            # #   base/test/test_suite.h
+            # #   gtk/gtk.h
+            # '../build/linux/system.gyp:gtk',
+          # ],
+        # }],
+      # ],
+    # },
   ],
   'conditions': [
     ['OS!="ios"', {
