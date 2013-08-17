@@ -23,8 +23,8 @@
       'dependencies': [
         'base_static',
         'allocator/allocator.gyp:allocator_extension_thunks',
-        '../testing/gtest.gyp:gtest_prod',
-        '../third_party/modp_b64/modp_b64.gyp:modp_b64',
+        #'../testing/gtest.gyp:gtest_prod',
+        'third_party/modp_b64/modp_b64.gyp:modp_b64',
         'third_party/dynamic_annotations/dynamic_annotations.gyp:dynamic_annotations',
       ],
       # TODO(gregoryd): direct_dependent_settings should be shared with the
@@ -125,7 +125,7 @@
             'base_jni_headers',
             'symbolize',
             '../third_party/ashmem/ashmem.gyp:ashmem',
-            '../third_party/icu/icu.gyp:icuuc',
+            #'../third_party/icu/icu.gyp:icuuc',
           ],
           'include_dirs': [
             '<(SHARED_INTERMEDIATE_DIR)/base',
@@ -258,8 +258,8 @@
       'dependencies': [
         'base',
         'third_party/dynamic_annotations/dynamic_annotations.gyp:dynamic_annotations',
-        '../third_party/icu/icu.gyp:icui18n',
-        '../third_party/icu/icu.gyp:icuuc',
+        #'../third_party/icu/icu.gyp:icui18n',
+        #'../third_party/icu/icu.gyp:icuuc',
       ],
       'conditions': [
         ['toolkit_uses_gtk==1', {
@@ -590,10 +590,10 @@
         'run_all_unittests',
         'test_support_base',
         'third_party/dynamic_annotations/dynamic_annotations.gyp:dynamic_annotations',
-        '../testing/gmock.gyp:gmock',
-        '../testing/gtest.gyp:gtest',
-        '../third_party/icu/icu.gyp:icui18n',
-        '../third_party/icu/icu.gyp:icuuc',
+        #'../testing/gmock.gyp:gmock',
+        #'../testing/gtest.gyp:gtest',
+        #'../third_party/icu/icu.gyp:icui18n',
+        #'../third_party/icu/icu.gyp:icuuc',
       ],
       'includes': ['../build/nocompile.gypi'],
       'variables': {
@@ -695,7 +695,7 @@
         # TODO(mark): This should not be necessary.
         ['OS == "win"', {
           'dependencies': [
-            '../third_party/icu/icu.gyp:icudata',
+            #'../third_party/icu/icu.gyp:icudata',
           ],
           'sources!': [
             'file_descriptor_shuffle_unittest.cc',
@@ -736,8 +736,8 @@
         'base',
         'base_static',
         'base_i18n',
-        '../testing/gmock.gyp:gmock',
-        '../testing/gtest.gyp:gtest',
+        #'../testing/gmock.gyp:gmock',
+        #'../testing/gtest.gyp:gtest',
       ],
       'export_dependent_settings': [
         'base',
@@ -839,7 +839,7 @@
       'type': 'static_library',
       'dependencies': [
         'base',
-        '../testing/gtest.gyp:gtest',
+        #'../testing/gtest.gyp:gtest',
       ],
       'sources': [
         'perftimer.cc',

@@ -530,7 +530,7 @@
           'dependencies': [
             'allocator',
             'allocator_extension_thunks',
-            '../../testing/gtest.gyp:gtest',
+            #'../../testing/gtest.gyp:gtest',
           ],
           'include_dirs': [
             '.',
@@ -573,7 +573,7 @@
           '<(tcmalloc_dir)/src',
         ],
         'dependencies': [
-          '../../testing/gtest.gyp:gtest',
+          #'../../testing/gtest.gyp:gtest',
           '../base.gyp:base',
           'allocator',
         ],
@@ -627,7 +627,7 @@
           'target_name': 'type_profiler_unittests',
           'type': 'executable',
           'dependencies': [
-            '../../testing/gtest.gyp:gtest',
+            #'../../testing/gtest.gyp:gtest',
             '../base.gyp:base',
             'allocator',
             'type_profiler_tcmalloc',
@@ -645,7 +645,7 @@
           'target_name': 'type_profiler_map_unittests',
           'type': 'executable',
           'dependencies': [
-            '../../testing/gtest.gyp:gtest',
+            #'../../testing/gtest.gyp:gtest',
             '../base.gyp:base',
             'allocator',
           ],

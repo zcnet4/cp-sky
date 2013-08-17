@@ -614,7 +614,7 @@
       # Note that official builds always behave as if this variable
       # was explicitly set to 1, i.e. they always use official keys,
       # and will fail to build if the internal file is missing.
-      'use_official_google_api_keys%': 2,
+      'use_official_google_api_keys%': 0,
 
       # Set these to bake the specified API keys and OAuth client
       # IDs/secrets into your build.

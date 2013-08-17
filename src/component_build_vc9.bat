@@ -5,7 +5,7 @@ rem cd /d %~dp0
 
 rem set path=%workDir%third_party\python_26;%path%
 rem 产生chrome及相关的yygame工程。
-python build\gyp_chromium --depth=trunk -D"component=shared_library" -D"disable_nacl=1"  -G msvs_version=2008 base\base.gyp
+python build\gyp_chromium -D"component=shared_library" -D"disable_nacl=1"  -G msvs_version=2008 base\base.gyp
 rem 产生单独yygame工程。
 rem python build\gyp_chromium -D"component=shared_library" -D"disable_nacl=1"  -G msvs_version=2008 yygame\yygame.gyp
 
