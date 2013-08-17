@@ -544,23 +544,23 @@
             '../profiler/alternate_timer.h',
           ],
         },
-        {
-          'target_name': 'allocator_extension_thunks_win64',
-          'type': 'static_library',
-          'sources': [
-            'allocator_extension_thunks.cc',
-            'allocator_extension_thunks.h',
-          ],
-          'toolsets': ['host', 'target'],
-          'include_dirs': [
-            '../../'
-          ],
-          'configurations': {
-            'Common_Base': {
-              'msvs_target_platform': 'x64',
-            },
-          },
-        },
+        # {
+          # 'target_name': 'allocator_extension_thunks_win64',
+          # 'type': 'static_library',
+          # 'sources': [
+            # 'allocator_extension_thunks.cc',
+            # 'allocator_extension_thunks.h',
+          # ],
+          # 'toolsets': ['host', 'target'],
+          # 'include_dirs': [
+            # '../../'
+          # ],
+          # 'configurations': {
+            # 'Common_Base': {
+              # 'msvs_target_platform': 'x64',
+            # },
+          # },
+        # },
       {
         'target_name': 'tcmalloc_unittest',
         'type': 'executable',

@@ -363,37 +363,37 @@
         '..',
       ],
     },
-    {
-      # TODO(rvargas): Remove this when gyp finally supports a clean model.
-      # See bug 36232.
-      'target_name': 'base_static_win64',
-      'type': 'static_library',
-      'sources': [
-        'base_switches.cc',
-        'base_switches.h',
-        'win/pe_image.cc',
-        'win/pe_image.h',
-      ],
-      'sources!': [
-        # base64.cc depends on modp_b64.
-        'base64.cc',
-      ],
-      'include_dirs': [
-        '..',
-      ],
-      'configurations': {
-        'Common_Base': {
-          'msvs_target_platform': 'x64',
-        },
-      },
-      'defines': [
-        'NACL_WIN64',
-      ],
-      # TODO(rvargas): Bug 78117. Remove this.
-      'msvs_disabled_warnings': [
-        4244,
-      ],
-    },
+    # {
+      # # TODO(rvargas): Remove this when gyp finally supports a clean model.
+      # # See bug 36232.
+      # 'target_name': 'base_static_win64',
+      # 'type': 'static_library',
+      # 'sources': [
+        # 'base_switches.cc',
+        # 'base_switches.h',
+        # 'win/pe_image.cc',
+        # 'win/pe_image.h',
+      # ],
+      # 'sources!': [
+        # # base64.cc depends on modp_b64.
+        # 'base64.cc',
+      # ],
+      # 'include_dirs': [
+        # '..',
+      # ],
+      # 'configurations': {
+        # 'Common_Base': {
+          # 'msvs_target_platform': 'x64',
+        # },
+      # },
+      # 'defines': [
+        # 'NACL_WIN64',
+      # ],
+      # # TODO(rvargas): Bug 78117. Remove this.
+      # 'msvs_disabled_warnings': [
+        # 4244,
+      # ],
+    # },
     # Include this target for a main() function that simply instantiates
     # and runs a base::TestSuite.
     {
@@ -880,70 +880,70 @@
     }],
     ['OS == "win"', {
       'targets': [
-        {
-          'target_name': 'base_nacl_win64',
-          'type': '<(component)',
-          'variables': {
-            'base_target': 1,
-          },
-          'dependencies': [
-            'base_static_win64',
-            'allocator/allocator.gyp:allocator_extension_thunks_win64',
-            'third_party/dynamic_annotations/dynamic_annotations.gyp:dynamic_annotations_win64',
-          ],
-          # TODO(gregoryd): direct_dependent_settings should be shared with the
-          # 32-bit target, but it doesn't work due to a bug in gyp
-          'direct_dependent_settings': {
-            'include_dirs': [
-              '..',
-            ],
-          },
-          'defines': [
-            '<@(nacl_win64_defines)',
-          ],
-          'sources!': [
-            # base64.cc depends on modp_b64.
-            'base64.cc',
-          ],
-          'configurations': {
-            'Common_Base': {
-              'msvs_target_platform': 'x64',
-            },
-          },
-          'conditions': [
-            ['component == "shared_library"', {
-              'sources!': [
-                'debug/debug_on_start_win.cc',
-              ],
-            }],
-          ],
-        },
-        {
-          'target_name': 'base_i18n_nacl_win64',
-          'type': '<(component)',
-          # TODO(gregoryd): direct_dependent_settings should be shared with the
-          # 32-bit target, but it doesn't work due to a bug in gyp
-          'direct_dependent_settings': {
-            'include_dirs': [
-              '..',
-            ],
-          },
-          'defines': [
-            '<@(nacl_win64_defines)',
-            'BASE_I18N_IMPLEMENTATION',
-          ],
-          'include_dirs': [
-            '..',
-          ],
-          'sources': [
-            'i18n/icu_util_nacl_win64.cc',
-          ],
-          'configurations': {
-            'Common_Base': {
-              'msvs_target_platform': 'x64',
-            },
-          },
-        },
+        # {
+          # 'target_name': 'base_nacl_win64',
+          # 'type': '<(component)',
+          # 'variables': {
+            # 'base_target': 1,
+          # },
+          # 'dependencies': [
+            # 'base_static_win64',
+            # 'allocator/allocator.gyp:allocator_extension_thunks_win64',
+            # 'third_party/dynamic_annotations/dynamic_annotations.gyp:dynamic_annotations_win64',
+          # ],
+          # # TODO(gregoryd): direct_dependent_settings should be shared with the
+          # # 32-bit target, but it doesn't work due to a bug in gyp
+          # 'direct_dependent_settings': {
+            # 'include_dirs': [
+              # '..',
+            # ],
+          # },
+          # 'defines': [
+            # '<@(nacl_win64_defines)',
+          # ],
+          # 'sources!': [
+            # # base64.cc depends on modp_b64.
+            # 'base64.cc',
+          # ],
+          # 'configurations': {
+            # 'Common_Base': {
+              # 'msvs_target_platform': 'x64',
+            # },
+          # },
+          # 'conditions': [
+            # ['component == "shared_library"', {
+              # 'sources!': [
+                # 'debug/debug_on_start_win.cc',
+              # ],
+            # }],
+          # ],
+        # },
+        # {
+          # 'target_name': 'base_i18n_nacl_win64',
+          # 'type': '<(component)',
+          # # TODO(gregoryd): direct_dependent_settings should be shared with the
+          # # 32-bit target, but it doesn't work due to a bug in gyp
+          # 'direct_dependent_settings': {
+            # 'include_dirs': [
+              # '..',
+            # ],
+          # },
+          # 'defines': [
+            # '<@(nacl_win64_defines)',
+            # 'BASE_I18N_IMPLEMENTATION',
+          # ],
+          # 'include_dirs': [
+            # '..',
+          # ],
+          # 'sources': [
+            # 'i18n/icu_util_nacl_win64.cc',
+          # ],
+          # 'configurations': {
+            # 'Common_Base': {
+              # 'msvs_target_platform': 'x64',
+            # },
+          # },
+        # },
       ],
     }],
     ['os_posix==1 and OS!="mac" and OS!="ios"', {
