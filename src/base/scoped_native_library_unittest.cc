@@ -7,7 +7,7 @@
 #include "base/file_path.h"
 #endif
 
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 // Tests whether or not a function pointer retrieved via ScopedNativeLibrary
 // is available only in a scope.

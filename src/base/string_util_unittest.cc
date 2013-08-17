@@ -13,7 +13,7 @@
 #include "base/string_util.h"
 #include "base/utf_string_conversions.h"
 #include "testing/gmock/include/gmock/gmock.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 using ::testing::ElementsAre;
 

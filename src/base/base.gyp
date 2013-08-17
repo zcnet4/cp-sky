@@ -248,61 +248,61 @@
         'sync_socket_posix.cc',
       ],
     },
-    {
-      'target_name': 'base_i18n',
-      'type': '<(component)',
-      'variables': {
-        'enable_wexit_time_destructors': 1,
-        'optimize': 'max',
-      },
-      'dependencies': [
-        'base',
-        'third_party/dynamic_annotations/dynamic_annotations.gyp:dynamic_annotations',
-        #'../third_party/icu/icu.gyp:icui18n',
-        #'../third_party/icu/icu.gyp:icuuc',
-      ],
-      'conditions': [
-        ['toolkit_uses_gtk==1', {
-          'dependencies': [
-            # i18n/rtl.cc uses gtk
-            '../build/linux/system.gyp:gtk',
-          ],
-        }],
-      ],
-      'export_dependent_settings': [
-        'base',
-      ],
-      'defines': [
-        'BASE_I18N_IMPLEMENTATION',
-      ],
-      'sources': [
-        'i18n/base_i18n_export.h',
-        'i18n/bidi_line_iterator.cc',
-        'i18n/bidi_line_iterator.h',
-        'i18n/break_iterator.cc',
-        'i18n/break_iterator.h',
-        'i18n/char_iterator.cc',
-        'i18n/char_iterator.h',
-        'i18n/case_conversion.cc',
-        'i18n/case_conversion.h',
-        'i18n/file_util_icu.cc',
-        'i18n/file_util_icu.h',
-        'i18n/icu_encoding_detection.cc',
-        'i18n/icu_encoding_detection.h',
-        'i18n/icu_string_conversions.cc',
-        'i18n/icu_string_conversions.h',
-        'i18n/icu_util.cc',
-        'i18n/icu_util.h',
-        'i18n/number_formatting.cc',
-        'i18n/number_formatting.h',
-        'i18n/rtl.cc',
-        'i18n/rtl.h',
-        'i18n/string_search.cc',
-        'i18n/string_search.h',
-        'i18n/time_formatting.cc',
-        'i18n/time_formatting.h',
-      ],
-    },
+    # {
+      # 'target_name': 'base_i18n',
+      # 'type': '<(component)',
+      # 'variables': {
+        # 'enable_wexit_time_destructors': 1,
+        # 'optimize': 'max',
+      # },
+      # 'dependencies': [
+        # 'base',
+        # 'third_party/dynamic_annotations/dynamic_annotations.gyp:dynamic_annotations',
+        # #'../third_party/icu/icu.gyp:icui18n',
+        # #'../third_party/icu/icu.gyp:icuuc',
+      # ],
+      # 'conditions': [
+        # ['toolkit_uses_gtk==1', {
+          # 'dependencies': [
+            # # i18n/rtl.cc uses gtk
+            # '../build/linux/system.gyp:gtk',
+          # ],
+        # }],
+      # ],
+      # 'export_dependent_settings': [
+        # 'base',
+      # ],
+      # 'defines': [
+        # 'BASE_I18N_IMPLEMENTATION',
+      # ],
+      # 'sources': [
+        # 'i18n/base_i18n_export.h',
+        # 'i18n/bidi_line_iterator.cc',
+        # 'i18n/bidi_line_iterator.h',
+        # 'i18n/break_iterator.cc',
+        # 'i18n/break_iterator.h',
+        # 'i18n/char_iterator.cc',
+        # 'i18n/char_iterator.h',
+        # 'i18n/case_conversion.cc',
+        # 'i18n/case_conversion.h',
+        # 'i18n/file_util_icu.cc',
+        # 'i18n/file_util_icu.h',
+        # 'i18n/icu_encoding_detection.cc',
+        # 'i18n/icu_encoding_detection.h',
+        # 'i18n/icu_string_conversions.cc',
+        # 'i18n/icu_string_conversions.h',
+        # 'i18n/icu_util.cc',
+        # 'i18n/icu_util.h',
+        # 'i18n/number_formatting.cc',
+        # 'i18n/number_formatting.h',
+        # 'i18n/rtl.cc',
+        # 'i18n/rtl.h',
+        # 'i18n/string_search.cc',
+        # 'i18n/string_search.h',
+        # 'i18n/time_formatting.cc',
+        # 'i18n/time_formatting.h',
+      # ],
+    # },
     {
       'target_name': 'base_prefs',
       'type': '<(component)',
@@ -409,6 +409,10 @@
     {
       'target_name': 'base_unittests',
       'type': '<(gtest_target_type)',
+	  'include_dirs': [
+        '.',
+		'..',
+      ],
       'sources': [
         # Tests.
         'android/jni_android_unittest.cc',
@@ -585,7 +589,7 @@
       ],
       'dependencies': [
         'base',
-        'base_i18n',
+        #'base_i18n',
         'base_static',
         #'run_all_unittests',
         #'test_support_base',

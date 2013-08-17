@@ -11,7 +11,7 @@
 #include "base/threading/platform_thread.h"
 #include "base/threading/simple_thread.h"
 #include "base/utf_string_conversions.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 #include "testing/multiprocess_func_list.h"
 
 namespace base {

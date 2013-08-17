@@ -7,7 +7,7 @@
 #include <string>
 
 #include "base/basictypes.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 TEST(SHA1Test, Test1) {
   // Example A.1 from FIPS 180-2: one-block message.

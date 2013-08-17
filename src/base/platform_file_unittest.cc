@@ -6,7 +6,7 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/platform_file.h"
 #include "base/time.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 namespace {
 

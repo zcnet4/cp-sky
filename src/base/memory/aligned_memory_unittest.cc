@@ -4,7 +4,7 @@
 
 #include "base/memory/aligned_memory.h"
 #include "base/memory/scoped_ptr.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 #define EXPECT_ALIGNED(ptr, align) \
     EXPECT_EQ(0u, reinterpret_cast<uintptr_t>(ptr) & (align - 1))

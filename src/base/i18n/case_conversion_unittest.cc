@@ -4,7 +4,7 @@
 
 #include "base/i18n/case_conversion.h"
 #include "base/utf_string_conversions.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 namespace {
 

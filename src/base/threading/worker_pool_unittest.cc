@@ -12,7 +12,7 @@
 #include "base/time.h"
 #include "base/threading/thread_checker_impl.h"
 #include "base/synchronization/waitable_event.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
 
 typedef PlatformTest WorkerPoolTest;

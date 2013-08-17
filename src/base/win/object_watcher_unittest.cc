@@ -6,7 +6,7 @@
 
 #include "base/message_loop.h"
 #include "base/win/object_watcher.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 namespace base {
 namespace win {

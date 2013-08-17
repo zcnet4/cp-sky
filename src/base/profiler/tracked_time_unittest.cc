@@ -7,7 +7,7 @@
 #include "base/profiler/tracked_time.h"
 #include "base/time.h"
 #include "base/tracked_objects.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 namespace tracked_objects {
 

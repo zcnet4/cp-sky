@@ -8,7 +8,7 @@
 #include "base/win/pe_image.h"
 #include "base/win/scoped_handle.h"
 #include "base/win/windows_version.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 // The address of our image base.
 extern "C" IMAGE_DOS_HEADER __ImageBase;

@@ -11,7 +11,7 @@
 #include "base/string_util.h"
 #include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest-spi.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
 
 #if defined(OS_WIN)

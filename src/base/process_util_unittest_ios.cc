@@ -4,7 +4,7 @@
 
 #include "base/memory/scoped_ptr.h"
 #include "base/process_util.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 TEST(ProcessUtilTestIos, Memory) {
   scoped_ptr<base::ProcessMetrics> process_metrics(

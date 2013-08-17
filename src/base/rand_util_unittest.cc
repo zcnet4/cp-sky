@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <limits>
 
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 namespace {
 

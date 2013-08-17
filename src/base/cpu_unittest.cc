@@ -5,7 +5,7 @@
 #include "base/cpu.h"
 #include "build/build_config.h"
 
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 // Tests whether we can run extended instructions represented by the CPU
 // information. This test actually executes some extended instructions (such as

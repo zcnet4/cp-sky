@@ -5,7 +5,7 @@
 #include "base/win/enum_variant.h"
 
 #include "base/win/scoped_com_initializer.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 namespace base {
 namespace win {

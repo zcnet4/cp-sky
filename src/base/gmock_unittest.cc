@@ -7,7 +7,7 @@
 // the basic mock features.
 
 #include "testing/gmock/include/gmock/gmock.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 // Gmock matchers and actions that we use below.
 using testing::AnyOf;

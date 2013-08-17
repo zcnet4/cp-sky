@@ -16,7 +16,7 @@
 #include "base/threading/platform_thread.h"
 #include "base/threading/thread_collision_warner.h"
 #include "base/time.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
 
 namespace base {

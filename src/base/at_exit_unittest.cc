@@ -5,7 +5,7 @@
 #include "base/at_exit.h"
 #include "base/bind.h"
 
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 namespace {
 

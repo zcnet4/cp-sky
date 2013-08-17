@@ -5,7 +5,7 @@
 // Unit tests for event trace provider.
 #include "base/win/event_trace_provider.h"
 #include <new>
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 #include <initguid.h>  // NOLINT - has to be last
 
 namespace {

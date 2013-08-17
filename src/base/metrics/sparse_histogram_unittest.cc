@@ -7,7 +7,7 @@
 #include "base/memory/scoped_ptr.h"
 #include "base/metrics/sample_map.h"
 #include "base/metrics/sparse_histogram.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 namespace base {
 

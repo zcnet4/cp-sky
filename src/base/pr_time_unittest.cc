@@ -7,7 +7,7 @@
 #include "base/compiler_specific.h"
 #include "base/third_party/nspr/prtime.h"
 #include "base/time.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 using base::Time;
 

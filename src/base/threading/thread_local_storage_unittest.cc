@@ -9,7 +9,7 @@
 
 #include "base/threading/simple_thread.h"
 #include "base/threading/thread_local_storage.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 #if defined(OS_WIN)
 // Ignore warnings about ptr->int conversions that we use when

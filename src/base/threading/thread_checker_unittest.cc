@@ -7,7 +7,7 @@
 #include "base/memory/scoped_ptr.h"
 #include "base/threading/thread_checker.h"
 #include "base/threading/simple_thread.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 // Duplicated from base/threading/thread_checker.h so that we can be
 // good citizens there and undef the macro.

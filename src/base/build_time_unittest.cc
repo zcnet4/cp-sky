@@ -4,7 +4,7 @@
 
 #include "base/build_time.h"
 
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 TEST(BuildTime, DateLooksValid) {
   char build_date[] = __DATE__;

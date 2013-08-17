@@ -7,7 +7,7 @@
 #include "base/string_piece.h"
 #include "base/stringprintf.h"
 #include "base/utf_string_conversions.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 namespace base {
 namespace i18n {

@@ -7,7 +7,7 @@
 #include <string.h>
 
 #include "base/port.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 template <class AtomicType>
 static void TestAtomicIncrement() {

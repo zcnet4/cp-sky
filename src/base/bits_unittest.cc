@@ -5,7 +5,7 @@
 // This file contains the unit tests for the bit utilities.
 
 #include "base/bits.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 namespace base {
 namespace bits {

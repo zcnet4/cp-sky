@@ -12,7 +12,7 @@
 
 #include "base/logging.h"
 #include "base/hash_tables.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 namespace base {
 

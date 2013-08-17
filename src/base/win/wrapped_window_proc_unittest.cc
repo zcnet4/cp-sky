@@ -4,7 +4,7 @@
 
 #include "base/win/wrapped_window_proc.h"
 #include "base/message_loop.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 namespace {
 

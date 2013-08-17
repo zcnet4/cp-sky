@@ -10,7 +10,7 @@
 #include "base/test/scoped_locale.h"
 #include "base/utf_string_conversions.h"
 #include "base/sys_string_conversions.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 #ifdef WCHAR_T_IS_UTF32
 static const std::wstring kSysWideOldItalicLetterA = L"\x10300";

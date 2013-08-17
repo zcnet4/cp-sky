@@ -7,7 +7,7 @@
 #include "base/memory/scoped_ptr.h"
 #include "base/system_monitor/system_monitor.h"
 #include "base/time.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 #if defined(OS_WIN)
 // http://crbug.com/114048

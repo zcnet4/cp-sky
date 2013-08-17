@@ -7,7 +7,7 @@
 #include "base/lazy_instance.h"
 #include "base/memory/aligned_memory.h"
 #include "base/threading/simple_thread.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 namespace {
 

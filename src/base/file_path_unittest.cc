@@ -6,7 +6,7 @@
 #include "base/file_path.h"
 #include "base/file_util.h"
 #include "base/utf_string_conversions.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
 
 // This macro helps avoid wrapped lines in the test structs.

@@ -4,7 +4,7 @@
 
 // This file contains unit tests for PEImage.
 
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 #include "base/win/pe_image.h"
 #include "base/win/windows_version.h"
 

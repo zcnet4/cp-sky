@@ -8,7 +8,7 @@
 #include "base/string_util.h"
 #include "base/win/win_util.h"
 #include "base/win/windows_version.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 namespace base {
 namespace win {

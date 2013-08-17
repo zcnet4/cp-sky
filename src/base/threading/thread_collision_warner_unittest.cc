@@ -8,7 +8,7 @@
 #include "base/threading/platform_thread.h"
 #include "base/threading/simple_thread.h"
 #include "base/threading/thread_collision_warner.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 // '' : local class member function does not have a body
 MSVC_PUSH_DISABLE_WARNING(4822)

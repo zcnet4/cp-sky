@@ -9,7 +9,7 @@
 #include "base/message_loop.h"
 #include "base/posix/eintr_wrapper.h"
 #include "base/threading/thread.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 namespace base {
 

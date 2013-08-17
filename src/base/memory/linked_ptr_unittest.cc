@@ -6,7 +6,7 @@
 
 #include "base/memory/linked_ptr.h"
 #include "base/stringprintf.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 namespace {
 

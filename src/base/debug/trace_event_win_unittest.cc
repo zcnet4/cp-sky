@@ -16,7 +16,7 @@
 #include "base/win/event_trace_provider.h"
 #include "base/win/windows_version.h"
 #include "testing/gmock/include/gmock/gmock.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 #include <initguid.h>  // NOLINT - must be last include.
 
 namespace base {

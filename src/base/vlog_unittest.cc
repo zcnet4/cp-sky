@@ -8,7 +8,7 @@
 #include "base/logging.h"
 #include "base/third_party/dynamic_annotations/dynamic_annotations.h"
 #include "base/time.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 namespace logging {
 

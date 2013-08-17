@@ -7,7 +7,7 @@
 #include "base/rand_util.h"
 #include "base/stringprintf.h"
 #include "base/string_number_conversions.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 namespace base {
 

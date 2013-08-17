@@ -4,7 +4,7 @@
 
 // This file contains unit tests for Windows internationalization funcs.
 
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 #include "base/win/i18n.h"
 #include "base/win/windows_version.h"

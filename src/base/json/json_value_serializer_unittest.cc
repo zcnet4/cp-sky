@@ -12,7 +12,7 @@
 #include "base/memory/scoped_ptr.h"
 #include "base/string_util.h"
 #include "base/values.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 namespace base {
 

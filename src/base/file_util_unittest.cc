@@ -24,7 +24,7 @@
 #include "base/test/test_file_util.h"
 #include "base/threading/platform_thread.h"
 #include "base/utf_string_conversions.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
 
 #if defined(OS_WIN)

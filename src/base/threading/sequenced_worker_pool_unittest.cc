@@ -19,7 +19,7 @@
 #include "base/test/task_runner_test_template.h"
 #include "base/threading/platform_thread.h"
 #include "base/tracked_objects.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 
 namespace base {
 

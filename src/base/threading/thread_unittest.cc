@@ -9,7 +9,7 @@
 #include "base/bind.h"
 #include "base/message_loop.h"
 #include "base/third_party/dynamic_annotations/dynamic_annotations.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
 
 using base::Thread;
