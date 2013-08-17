@@ -32,6 +32,8 @@
 
 #endif  // OS_POSIX
 
+typedef /*__nullnullterminated*/ wchar_t *PZZWSTR;
+
 // -------------------------------------------------------------------------
 
 #endif /* BASE_PORT_ZCNET4_H_ */
