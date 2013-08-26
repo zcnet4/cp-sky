@@ -10,6 +10,7 @@
       'dependencies': [
 		'../base/base.gyp:base',
 		'../base/third_party/dynamic_annotations/dynamic_annotations.gyp:dynamic_annotations',
+		'../common/zccommon.gyp:zccommon',
       ],
 	  #目标工程预处理宏定义
       'defines': [
