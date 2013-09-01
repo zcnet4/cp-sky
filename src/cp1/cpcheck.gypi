@@ -28,6 +28,8 @@
 		#'cpcheck/cpcheck_api.cc',
 		'cpcheck/lib_data/lib_data.h',
 		'cpcheck/lib_data/lib_data.cc',
+		'cpcheck/cp_av_check_impl.h',
+		'cpcheck/cp_av_check_impl.cc',
       ],
       'direct_dependent_settings': {
         'include_dirs': [
