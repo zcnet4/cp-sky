@@ -37,6 +37,7 @@ private:
 	class CPAvLibParse;
 private:
 	t_vecCompanyInfos m_CompanyList;
+	t_vecInstalledSoftInfos m_GuidList;
 };
 
 // -------------------------------------------------------------------------
