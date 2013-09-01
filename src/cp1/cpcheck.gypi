@@ -24,8 +24,10 @@
 	  #目标工程源代码路径
       'sources': [
 		'cpcheck/cpcheck_export.h',
-		'cpcheck/cpcheck_api.h',
-		'cpcheck/cpcheck_api.cc',
+		#'cpcheck/cpcheck_api.h',
+		#'cpcheck/cpcheck_api.cc',
+		'cpcheck/lib_data/lib_data.h',
+		'cpcheck/lib_data/lib_data.cc',
       ],
       'direct_dependent_settings': {
         'include_dirs': [
