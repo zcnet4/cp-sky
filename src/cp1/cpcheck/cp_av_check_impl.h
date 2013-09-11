@@ -8,6 +8,7 @@
 #ifndef CP1_CPCHECK_CP_AV_CHECK_IMPL_H_
 #define CP1_CPCHECK_CP_AV_CHECK_IMPL_H_
 #include <vector>
+#include "common/zccommon.h"
 // -------------------------------------------------------------------------
 //////////////////////////////////////////////////////////////////////////
 //
@@ -22,6 +23,11 @@ public:
 	@brief		: 是否可用。
 	*/
 	bool LoadAvData(const FilePath& av_file_path);
+	/*
+	@func		: CheckAv
+	@brief		: 是否可用。
+	*/
+	PCStr CheckAv();
 protected:
 	/*
 	@func		: LoadSoftGuid

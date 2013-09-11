@@ -26,6 +26,10 @@
 			'zccommon.h',
 			'xml/hm_xml.h',
 			'xml/hm_xml.cpp',
+			'expevaluate/expevaluate.h',
+			'expevaluate/expevaluate.cpp',
+			'zc_helper.h',
+			'zc_helper.cpp',
       ],
       'direct_dependent_settings': {
         'include_dirs': [

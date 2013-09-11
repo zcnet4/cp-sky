@@ -12,11 +12,14 @@
 #include <Msi.h>
 #include "base/win/registry.h"
 #include "base/string16.h"
+#include "base/stringprintf.h"
+#include <oledb.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
+#include "atltrace.h"
 #endif
 
 // -------------------------------------------------------------------------
@@ -192,45 +195,87 @@ bool CPAvCheckImpl::LoadSoftGuid()
 
 	//直接通过注册表枚举
 	base::win::RegistryKeyIterator enumProduct(HKEY_LOCAL_MACHINE, PRODUCT_GUID_PATH);
-	WCHAR szFullPath[MAX_PATH*2] = {0};
-	WCHAR szValue[MAX_PATH] = {0};
 	base::win::RegKey reg_key;
 	while (enumProduct.Valid()) {
 		INSTALLED_SOFT_ITEM soft_item;
 
-		StringCbPrintf(szFullPath, sizeof(szFullPath), L"%s\\%s\\InstallProperties", PRODUCT_GUID_PATH, enumProduct.Name());
-		reg_key.Open(HKEY_LOCAL_MACHINE, szFullPath, PERM_READ);
+		std::wstring path(base::StringPrintf(L"%s\\%s\\InstallProperties", PRODUCT_GUID_PATH, enumProduct.Name()));
+		reg_key.Open(HKEY_LOCAL_MACHINE, path.c_str(), PERM_READ);
 		reg_key.ReadValue(L"DisplayName", &soft_item.strName);
 
 		string16 unistallString;
 		reg_key.ReadValue(L"UninstallString", &unistallString);
 		{
-			WCHAR* pos1 = NULL;
-			WCHAR* pos2 = NULL;
-			pos1 = StrChr(szValue, L'{');
-			pos2 = StrChr(szValue, L'}');
-			if(pos1 && pos2)
-			{
-				DWORD dwLen = (DWORD)(pos2-pos1+1) * sizeof(WCHAR);
-
-				soft_item.strGUID = CString(pos1, dwLen);
-				if( soft_item.strGUID.GetLength() != 0 )
-					m_GuidList.AddTail(soft_item);
+			size_t pos1 = unistallString.find('{');
+			if (string16::npos != pos1) {
+				size_t pos2 = unistallString.find('}', pos1);
+				if (string16::npos != pos2 && pos1 != pos2) {
+					soft_item.strGUID = unistallString.substr(pos1, pos2 - pos1);
+					m_GuidList.push_back(soft_item);
+				}
 			}
 		}
 		// next
-		enumProduct++;
+		++enumProduct;
 	}
-
-	POSITION iPos = m_GuidList.GetHeadPosition();
-	while ( iPos != NULL )
-	{
-		const INSTALLED_SOFT_ITEM& si = m_GuidList.GetNext(iPos);
-
-		ATLTRACE(L"%s, %s\n", si.strName, si.strGUID);
+	//
+#ifdef _DEBUG
+	t_vecInstalledSoftInfos::iterator iter = m_GuidList.begin();
+	t_vecInstalledSoftInfos::iterator iterEnd = m_GuidList.end();
+	for ( ; iterEnd != iter; ++iter) {
+		const INSTALLED_SOFT_ITEM& si = *iter;
+		ATLTRACE(L"%s, %s\n", si.strName.c_str(), si.strGUID.c_str());
 	}
-
+#endif // _DEBUG
+	//
 	return TRUE;
 }
 
+/*
+@func		: CheckAv
+@brief		: 是否可用。
+*/
+PCStr CPAvCheckImpl::CheckAv()
+{
+	m_iCompantPos = NULL;
+	m_iProductPos = NULL;
+
+	t_vecCompanyInfos::iterator iter = m_CompanyList.begin();
+	t_vecCompanyInfos::iterator iterEnd = m_CompanyList.end();
+	for ( ; iterEnd != iter; ++iter) {
+		const COMPANY_INFO& ci = *iter;
+		//
+		if ( ci.strExpression.empty() || )
+		{
+		}
+	}
+	POSITION iPos = m_CompanyList.GetHeadPosition();
+	while ( iPos != NULL )
+	{
+		const COMPANY_INFO& ci = m_CompanyList.GetNext(iPos);
+		if ( ci.strExpression.IsEmpty() || EvaluateCondition(ci.strExpression) )
+		{
+			ATLTRACE(_T("EvaluateCondition: Company.strExpression=%s"), ci.strExpression);
+
+			POSITION jPos = ci.ProductList.GetHeadPosition();
+			while( jPos != NULL )
+			{
+				const PRODUCT_INFO& pi = ci.ProductList.GetNext(jPos);
+				CString strExpression(pi.strExpression);
+
+				ProcessGUID(pi.strGUIDName, strExpression);
+				if ( EvaluateCondition(strExpression) )
+				{
+					ATLTRACE(_T("EvaluateCondition: Product.strExpression=%s"), strExpression);
+
+					m_iCompantPos = iPos;
+					m_iProductPos = jPos;
+					return pi.strName;
+				}
+			}
+		}
+	}
+
+	return NULL;
+}
 // -------------------------------------------------------------------------
