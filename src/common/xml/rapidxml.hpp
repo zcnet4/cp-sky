@@ -136,7 +136,7 @@ namespace rapidxml
     // Forward declarations
     template<class Ch> class xml_node;
     template<class Ch> class xml_attribute;
-    template<class Ch,int> class xml_document;
+    template<class Ch> class xml_document;
     
     //! Enumeration listing all node types produced by the parser.
     //! Use xml_node::type() function to query node type.
@@ -375,9 +375,7 @@ namespace rapidxml
     //! to obtain best wasted memory to performance compromise.
     //! To do it, define their values before rapidxml.hpp file is included.
     //! \param Ch Character type of created nodes. 
-    template<class Ch = char, 
-			 int STATIC_POOL_SIZE = RAPIDXML_STATIC_POOL_SIZE, 
-			 int DYNAMIC_POOL_SIZE = RAPIDXML_DYNAMIC_POOL_SIZE>
+    template<class Ch = char>
     class memory_pool
     {
         
@@ -607,7 +605,7 @@ namespace rapidxml
             if (result + size > m_end)
             {
                 // Calculate required pool size (may be bigger than RAPIDXML_DYNAMIC_POOL_SIZE)
-                std::size_t pool_size = DYNAMIC_POOL_SIZE;
+                std::size_t pool_size = RAPIDXML_DYNAMIC_POOL_SIZE;
                 if (pool_size < size)
                     pool_size = size;
                 
@@ -635,7 +633,7 @@ namespace rapidxml
         char *m_begin;                                      // Start of raw memory making up current pool
         char *m_ptr;                                        // First free byte in current pool
         char *m_end;                                        // One past last available byte in current pool
-        char m_static_memory[STATIC_POOL_SIZE];				// Static raw memory
+        char m_static_memory[RAPIDXML_STATIC_POOL_SIZE];    // Static raw memory
         alloc_func *m_alloc_func;                           // Allocator function, or 0 if default is to be used
         free_func *m_free_func;                             // Free function, or 0 if default is to be used
     };
@@ -818,14 +816,13 @@ namespace rapidxml
     
         //! Gets document of which attribute is a child.
         //! \return Pointer to document that contains this attribute, or 0 if there is no parent document.
-        template<int STORAGESIZE>
-		xml_document<Ch,STORAGESIZE> *document() const
+        xml_document<Ch> *document() const
         {
             if (xml_node<Ch> *node = this->parent())
             {
                 while (node->parent())
                     node = node->parent();
-                return node->type() == node_document ? static_cast<xml_document<Ch,STORAGESIZE> *>(node) : 0;
+                return node->type() == node_document ? static_cast<xml_document<Ch> *>(node) : 0;
             }
             else
                 return 0;
@@ -923,13 +920,12 @@ namespace rapidxml
     
         //! Gets document of which node is a child.
         //! \return Pointer to document that contains this node, or 0 if there is no parent document.
-        template<int STORAGESIZE>
-		xml_document<Ch,STORAGESIZE> *document() const
+        xml_document<Ch> *document() const
         {
             xml_node<Ch> *node = const_cast<xml_node<Ch> *>(this);
             while (node->parent())
                 node = node->parent();
-            return node->type() == node_document ? static_cast<xml_document<Ch,STORAGESIZE> *>(node) : 0;
+            return node->type() == node_document ? static_cast<xml_document<Ch> *>(node) : 0;
         }
 
         //! Gets first child node, optionally matching node name.
@@ -1358,8 +1354,8 @@ namespace rapidxml
     //! which are inherited from memory_pool.
     //! To access root node of the document, use the document itself, as if it was an xml_node.
     //! \param Ch Character type to use.
-    template<class Ch = char, int STORAGESIZE = RAPIDXML_STATIC_POOL_SIZE>
-    class xml_document: public xml_node<Ch>, public memory_pool<Ch, STORAGESIZE>
+    template<class Ch = char>
+    class xml_document: public xml_node<Ch>, public memory_pool<Ch>
     {
     
     public:

@@ -1,28 +1,37 @@
 /* -------------------------------------------------------------------------
-//	FileName	：	hm_xml.cpp
+//	FileName	：	third_party/rapidxml/yygame_xml.cc
 //	Creator		：	(zc)
 //	CreateTime	：	2013-04-18 10:08:19
 //	Description	：	
 //
 // -----------------------------------------------------------------------*/
-
-#include "stdafx.h"
+//#include "third_party/rapidxml/yygame_xml.h"
 #include "hm_xml.h"
-
+//#include "base/compiler_specific.h"
+//#include "base/strings/string_util.h"	// for base::strcasecmp
+//#include "base/strings/string_number_conversions.h" // for base::StringToInt
 #ifdef YG_USE_TINYXML
 	#include "tinyxml.h"		// for tinyxml
+  #define refXmlDoc   (xml_node_->GetDocument())
 #else
 	#include "rapidxml.hpp"		// for rapidxml
-	class RdXmlNode		: public rapidxml::xml_node<char> {};
+  #include "rapidxml_print.hpp"
+	class RdXmlNode		  : public rapidxml::xml_node<char> {};
 	class RdXmlAttribute: public rapidxml::xml_attribute<char> {};
-	class RdXmlDocument	: public rapidxml::xml_document<char, RAPIDXML_STATIC_POOL_SIZE/2> {};
+	class RdXmlDocument	: public rapidxml::xml_document<char> {};
+  #define refXmlDoc   (static_cast<RdXmlDocument*>(xml_node_->document()))
 #endif // _DEBUG
 
-#ifdef _DEBUG
-//#define new DEBUG_NEW
-//#undef THIS_FILE
-//static char THIS_FILE[] = __FILE__;
+inline int _StrCaseCmp(const char* s1, const char* s2) {
+  return _stricmp(s1, s2);
+}
+
+//YYBrowser Begin
+//by ZC. 2014-3-27 16:04.
+#ifndef IsValidString
+  #define IsValidString(x) static_cast<bool>(x && x[0])
 #endif
+//YYBrowser End
 
 // -------------------------------------------------------------------------
 
@@ -32,40 +41,35 @@ NS_BEGIN(base)
 //////////////////////////////////////////////////////////////////////////
 // HMXmlAttribute
 HMXmlAttribute::HMXmlAttribute()
-	: xmlAttr__(NULL)
-{
-
+	: xml_attribute_(NULL) {
 }
 
 /*
 @func		: isValid
 @brief		: 是否可用。
 */
-bool HMXmlAttribute::isValid() const
-{
-	return (xmlAttr__ != NULL);
+bool HMXmlAttribute::isValid() const {
+	return (xml_attribute_ != NULL);
 }
 
 /*
 @func		: isEqual
 @brief		: 是否相同。
 */
-bool HMXmlAttribute::isEqual(const HMXmlAttribute& other) const
-{
-	return (xmlAttr__ == other.xmlAttr__);
+bool HMXmlAttribute::isEqual(const HMXmlAttribute& other) const {
+	return (xml_attribute_ == other.xml_attribute_);
 }
 
 /*
 @func		: Name
 @brief		: 
 */
-LPCSTR	HMXmlAttribute::getName()  const
-{
-	if (xmlAttr__ != NULL) {
+const char*	HMXmlAttribute::getName() const {
+	if (xml_attribute_ != NULL) {
 #ifdef YG_USE_TINYXML
-		return xmlAttr__->Name();
+		return xml_attribute_->Name();
 #else
-		return xmlAttr__->name();
+		return xml_attribute_->name();
 #endif
 	}
 	return NULL;
@@ -75,13 +79,12 @@ LPCSTR	HMXmlAttribute::getName()  const
 @func		: Value
 @brief		: 
 */
-utf8string	HMXmlAttribute::getValue() const
-{
-	if (xmlAttr__ != NULL) {
+const char*	HMXmlAttribute::getValue() const {
+	if (xml_attribute_ != NULL) {
 #ifdef YG_USE_TINYXML
-		return xmlAttr__->Value();
+		return xml_attribute_->Value();
 #else
-		return xmlAttr__->value();
+		return xml_attribute_->value();
 #endif
 	}
 	return NULL;
@@ -91,14 +94,13 @@ utf8string	HMXmlAttribute::getValue() const
 @func		: Next
 @brief		: 
 */
-HMXmlAttribute HMXmlAttribute::nextAttribute() const
-{
+HMXmlAttribute HMXmlAttribute::nextAttribute() const {
 	HMXmlAttribute xmlAttribute;
-	if (xmlAttr__ != NULL) {
+	if (xml_attribute_ != NULL) {
 #ifdef YG_USE_TINYXML
-		xmlAttribute.xmlAttr__ = xmlAttr__->Next();
+		xmlAttribute.xml_attribute_ = xml_attribute_->Next();
 #else
-		xmlAttribute.xmlAttr__ = static_cast<RdXmlAttribute*>(xmlAttr__->next_attribute());
+		xmlAttribute.xml_attribute_ = static_cast<RdXmlAttribute*>(xml_attribute_->next_attribute());
 #endif
 	}
 	return xmlAttribute;
@@ -107,8 +109,7 @@ HMXmlAttribute HMXmlAttribute::nextAttribute() const
 //////////////////////////////////////////////////////////////////////////
 // HMXmlNode
 HMXmlNode::HMXmlNode()
-	: xmlNode__(NULL)
-{
+	: xml_node_(NULL) {
 
 }
 
@@ -116,36 +117,33 @@ HMXmlNode::HMXmlNode()
 @func		: isValid
 @brief		: 是否可用。
 */
-bool HMXmlNode::isValid() const
-{
-	return (xmlNode__ != NULL);
+bool HMXmlNode::isValid() const {
+	return (xml_node_ != NULL);
 }
 
 /*
 @func		: isEqual
 @brief		: 是否相同。
 */
-bool HMXmlNode::isEqual(const HMXmlNode& other) const
-{
-	return (xmlNode__ == other.xmlNode__);
+bool HMXmlNode::isEqual(const HMXmlNode& other) const {
+	return (xml_node_ == other.xml_node_);
 }
 
 /*
 @func		: firstChild
 @brief		:
 */
-HMXmlNode HMXmlNode::firstChild(LPCSTR xmlTag/* = NULL*/) const
-{
+HMXmlNode HMXmlNode::firstChild(const char* xmlTag/* = NULL*/) const {
 	HMXmlNode xmlNodeObj;
-	if (xmlNode__) {
+	if (xml_node_) {
 #ifdef YG_USE_TINYXML
 		if (IsValidString(xmlTag)) {
-			xmlNodeObj.xmlNode__ = xmlNode__->FirstChild(xmlTag);
+			xmlNodeObj.xml_node_ = xml_node_->FirstChild(xmlTag);
 		} else {
-			xmlNodeObj.xmlNode__ = xmlNode__->FirstChild();
+			xmlNodeObj.xml_node_ = xml_node_->FirstChild();
 		}
 #else
-		xmlNodeObj.xmlNode__	= static_cast<RdXmlNode*>(xmlNode__->first_node(xmlTag));
+		xmlNodeObj.xml_node_	= static_cast<RdXmlNode*>(xml_node_->first_node(xmlTag));
 #endif // _DEBUG
 		
 	}
@@ -156,18 +154,17 @@ HMXmlNode HMXmlNode::firstChild(LPCSTR xmlTag/* = NULL*/) const
 @func		: lastChild
 @brief		:
 */
-HMXmlNode HMXmlNode::lastChild(LPCSTR xmlTag/* = NULL*/) const
-{
+HMXmlNode HMXmlNode::lastChild(const char* xmlTag/* = NULL*/) const {
 	HMXmlNode xmlNodeObj;
-	if (xmlNode__) {
+	if (xml_node_) {
 #ifdef YG_USE_TINYXML
 		if (IsValidString(xmlTag)) {
-			xmlNodeObj.xmlNode__ = xmlNode__->LastChild(xmlTag);
+			xmlNodeObj.xml_node_ = xml_node_->LastChild(xmlTag);
 		} else {
-			xmlNodeObj.xmlNode__ = xmlNode__->LastChild();
+			xmlNodeObj.xml_node_ = xml_node_->LastChild();
 		}
 #else
-		xmlNodeObj.xmlNode__	= static_cast<RdXmlNode*>(xmlNode__->last_node(xmlTag));
+		xmlNodeObj.xml_node_	= static_cast<RdXmlNode*>(xml_node_->last_node(xmlTag));
 #endif
 	}
 	return xmlNodeObj;
@@ -177,18 +174,17 @@ HMXmlNode HMXmlNode::lastChild(LPCSTR xmlTag/* = NULL*/) const
 @func		: previousSibling
 @brief		:
 */
-HMXmlNode HMXmlNode::previousSibling(LPCSTR xmlTag/* = NULL*/) const
-{
+HMXmlNode HMXmlNode::previousSibling(const char* xmlTag/* = NULL*/) const {
 	HMXmlNode xmlNodeObj;
-	if (xmlNode__) {
+	if (xml_node_) {
 #ifdef YG_USE_TINYXML
 		if (IsValidString(xmlTag)) {
-			xmlNodeObj.xmlNode__ = xmlNode__->PreviousSibling(xmlTag);
+			xmlNodeObj.xml_node_ = xml_node_->PreviousSibling(xmlTag);
 		} else {
-			xmlNodeObj.xmlNode__ = xmlNode__->PreviousSibling();
+			xmlNodeObj.xml_node_ = xml_node_->PreviousSibling();
 		}
 #else
-		xmlNodeObj.xmlNode__	= static_cast<RdXmlNode*>(xmlNode__->previous_sibling(xmlTag));
+		xmlNodeObj.xml_node_	= static_cast<RdXmlNode*>(xml_node_->previous_sibling(xmlTag));
 #endif
 	}
 	return xmlNodeObj;
@@ -198,21 +194,41 @@ HMXmlNode HMXmlNode::previousSibling(LPCSTR xmlTag/* = NULL*/) const
 @func		: nextSibling
 @brief		: Navigate to a sibling node.
 */
-HMXmlNode HMXmlNode::nextSibling(LPCSTR xmlTag/* = NULL*/) const
-{
+HMXmlNode HMXmlNode::nextSibling(const char* xmlTag/* = NULL*/) const {
 	HMXmlNode xmlNodeObj;
-	if (xmlNode__) {
+	if (xml_node_) {
 #ifdef YG_USE_TINYXML
 		if (IsValidString(xmlTag)) {
-			xmlNodeObj.xmlNode__ = xmlNode__->NextSibling(xmlTag);
+			xmlNodeObj.xml_node_ = xml_node_->NextSibling(xmlTag);
 		} else {
-			xmlNodeObj.xmlNode__ = xmlNode__->NextSibling();
+			xmlNodeObj.xml_node_ = xml_node_->NextSibling();
 		}
 #else
-		xmlNodeObj.xmlNode__	= static_cast<RdXmlNode*>(xmlNode__->next_sibling(xmlTag));
+		xmlNodeObj.xml_node_	= static_cast<RdXmlNode*>(xml_node_->next_sibling(xmlTag));
 #endif
 	}
 	return xmlNodeObj;
+}
+
+/*
+@func			: document
+@brief		:
+*/
+HMXmlDocumentBase HMXmlNode::document() {
+  if (!xml_node_) return HMXmlDocumentBase(0);
+
+  HMXmlDocumentBase xmlDoc(refXmlDoc);
+  //
+  return xmlDoc;
+}
+
+/*
+@func			: print
+@brief		:
+*/
+void HMXmlNode::print(std::string& out) {
+  if (xml_node_)
+    rapidxml::print(std::back_inserter(out), *xml_node_, 0);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -221,15 +237,14 @@ HMXmlNode HMXmlNode::nextSibling(LPCSTR xmlTag/* = NULL*/) const
 @func		: tagName
 @brief		: 如果当前节点是element，则返回其标签名。
 */
-LPCSTR HMXmlElement::tagName() const
-{
+const char* HMXmlElement::tagName() const {
 #ifdef YG_USE_TINYXML
-	if(xmlNode__ && NULL != xmlNode__->ToElement()) {
-		return xmlNode__->Value();
+	if(xml_node_ && NULL != xml_node_->ToElement()) {
+		return xml_node_->Value();
 	}
 #else
-	if (xmlNode__ && rapidxml::node_element == xmlNode__->type()) {
-		return xmlNode__->name();
+	if (xml_node_ && rapidxml::node_element == xml_node_->type()) {
+		return xml_node_->name();
 	}
 #endif // YG_USE_TINYXML
 	return NULL;
@@ -239,13 +254,12 @@ LPCSTR HMXmlElement::tagName() const
 @func		: isTagName
 @brief		: 是否是指定的标签名。
 */
-bool HMXmlElement::isTagName(LPCSTR pszTag)
-{
-	LPCSTR xmlTagName = tagName();
-	if (IsValidString(xmlTagName)/* && IsValidString(pszTag)*/) {
-		return 0 == hm_stricmp(xmlTagName, pszTag);
+bool HMXmlElement::isTagName(const char* pszTag) {
+	const char* xmlTagName = tagName();
+	if (xmlTagName && xmlTagName[0] != '\0' && pszTag) {
+    return _StrCaseCmp(xmlTagName, pszTag) == 0;
 	}
-	//
+	
 	return false;
 }
 
@@ -254,19 +268,18 @@ bool HMXmlElement::isTagName(LPCSTR pszTag)
 @brief		: 如果当前节点含有TiXmlText节点，则返回相应的值，否则，返回NULL
 			  宽字符版本则返回“”字符串
 */
-utf8string HMXmlElement::getText() const
-{
+const char* HMXmlElement::getText() const {
 #ifdef YG_USE_TINYXML
-	if (xmlNode__) {
-		TiXmlElement* xmlElem = xmlNode__->ToElement();
+	if (xml_node_) {
+		TiXmlElement* xmlElem = xml_node_->ToElement();
 		if (xmlElem) {
 			return xmlElem->GetText();
 		}
 	}
 #else
-	if (xmlNode__ && rapidxml::node_element == xmlNode__->type()) {
+	if (xml_node_ && rapidxml::node_element == xml_node_->type()) {
 		// ASSERT(FALSE);
-		RdXmlNode* pChildNode = static_cast<RdXmlNode*>(xmlNode__->first_node());
+		RdXmlNode* pChildNode = static_cast<RdXmlNode*>(xml_node_->first_node());
 		if (pChildNode 
 			&& (pChildNode->type() == rapidxml::node_data 
 			    || pChildNode->type() == rapidxml::node_cdata
@@ -283,18 +296,17 @@ utf8string HMXmlElement::getText() const
 @func		: attribute
 @brief		:
 */
-utf8string HMXmlElement::attribute(IN LPCSTR name, IN LPCSTR pszDefValue/* = NULL*/) const
-{
+const char* HMXmlElement::attribute( const char* name, const char* pszDefValue/* = NULL*/) const {
 #ifdef YG_USE_TINYXML
-	if (xmlNode__) {
-		TiXmlElement* xmlElem = xmlNode__->ToElement();
+	if (xml_node_) {
+		TiXmlElement* xmlElem = xml_node_->ToElement();
 		if (xmlElem) {
 			return xmlElem->Attribute(name);
 		}
 	}
 #else
-	if (xmlNode__ && rapidxml::node_element == xmlNode__->type()) {
-		RdXmlAttribute* attribNode = static_cast<RdXmlAttribute*>(xmlNode__->first_attribute(name));
+	if (xml_node_ && rapidxml::node_element == xml_node_->type()) {
+		RdXmlAttribute* attribNode = static_cast<RdXmlAttribute*>(xml_node_->first_attribute(name));
 		if (attribNode){
 			return attribNode->value();
 		}
@@ -307,23 +319,32 @@ utf8string HMXmlElement::attribute(IN LPCSTR name, IN LPCSTR pszDefValue/* = NUL
 @func		: attributeInt
 @brief		:
 */
-int32 HMXmlElement::attributeInt(IN LPCSTR name, int32 nDefValue/* = 0*/) const
-{
+int HMXmlElement::attributeInt(const char* name, int nDefValue/* = 0*/) const {
 #ifdef YG_USE_TINYXML
-	if (xmlNode__) {
-		TiXmlElement* xmlElem = xmlNode__->ToElement();
+	if (xml_node_) {
+		TiXmlElement* xmlElem = xml_node_->ToElement();
 		if (xmlElem) {
 			xmlElem->Attribute(name, &nDefValue);
 		}
 	}
 #else
-	if (xmlNode__ && rapidxml::node_element == xmlNode__->type()) {
-		RdXmlAttribute* attribNode = static_cast<RdXmlAttribute*>(xmlNode__->first_attribute(name));
+	if (xml_node_ && rapidxml::node_element == xml_node_->type()) {
+		RdXmlAttribute* attribNode = static_cast<RdXmlAttribute*>(xml_node_->first_attribute(name));
 		if (attribNode) {
-			LPCSTR attribValue = attribNode->value();
-			if (IsValidString(attribValue)) {
-				nDefValue = atoi(attribValue);
-			}
+			const char* attribValue = attribNode->value();
+      if (attribValue && attribValue[0] != '\0') {
+        int attrib_value = 0;
+        // only return it if conversion is succeed. modified by Von.
+#if 1
+        attrib_value = atoi(attribValue);
+        if (errno == 0)
+          nDefValue = attrib_value;
+#else
+        if (base::StringToInt(base::StringPiece(attribValue), &attrib_value)) {
+          nDefValue = attrib_value;
+        }
+#endif
+      }
 		}
 	}
 #endif // YG_USE_TINYXML
@@ -332,23 +353,73 @@ int32 HMXmlElement::attributeInt(IN LPCSTR name, int32 nDefValue/* = 0*/) const
 }
 
 /*
+@func		: setAttribute
+@brief		:
+*/
+void HMXmlElement::setAttribute(const char* name, const char* pszValue) {
+  if (xml_node_ && IsValidString(name)) {
+#ifdef YG_USE_TINYXML
+    refXmlDoc->setAttribute(name, pszValue);
+#else
+    //#define refXmlDoc(x) (static_cast<RdXmlDocument*>(xml_node_->document<RAPIDXML_STATIC_POOL_SIZE / 2>()))
+    RdXmlDocument* doc = refXmlDoc;
+    const char* my_value = NULL;
+    if (IsValidString(pszValue)) {
+      my_value = doc->allocate_string(pszValue);
+    }
+    //
+    RdXmlAttribute* attrib = static_cast<RdXmlAttribute*>(xml_node_->first_attribute(name, 0, false));
+    if (attrib) {
+      attrib->value(my_value);
+    } else {
+      const char* my_name = doc->allocate_string(name);
+      xml_node_->append_attribute(doc->allocate_attribute(my_name, my_value));
+    }
+#endif
+  }
+}
+
+/*
+@func		: firstAttribute
+@brief		: Sets an attribute of name to a given value. The attribute
+will be created if it does not exist, or changed if it does.
+*/
+HMXmlAttribute HMXmlElement::firstAttribute() const {
+  HMXmlAttribute xmlAttribute;
+#ifdef YG_USE_TINYXML
+  if (xml_node_) {
+    TiXmlElement* xmlElem = xml_node_->ToElement();
+    if (xmlElem) {
+      xmlAttribute.xml_attribute_ = xmlElem->FirstAttribute();
+    }
+  }
+#else
+  if (xml_node_ && rapidxml::node_element == xml_node_->type()) {
+    xmlAttribute.xml_attribute_ = static_cast<RdXmlAttribute*>(xml_node_->first_attribute());
+  }
+#endif
+  //
+  return xmlAttribute;
+}
+
+
+/*
 @func		: firstChildElement
 @brief		:
 */
-HMXmlElement HMXmlElement::firstChildElement(LPCSTR xmlTag/* = NULL*/) const
-{
+HMXmlElement HMXmlElement::firstChildElement(const char* xmlTag/* = NULL*/) const {
 	HMXmlElement xmlElemObj;
-	if (xmlNode__) {
+	if (xml_node_) {
 #ifdef YG_USE_TINYXML
 		if (IsValidString(xmlTag)) {
-			xmlElemObj.xmlNode__ = xmlNode__->FirstChildElement(xmlTag);
+			xmlElemObj.xml_node_ = xml_node_->FirstChildElement(xmlTag);
 		} else {
-			xmlElemObj.xmlNode__ = xmlNode__->FirstChildElement();
+			xmlElemObj.xml_node_ = xml_node_->FirstChildElement();
 		}
 #else
-		RdXmlNode* _pXmlElem = static_cast<RdXmlNode*>(xmlNode__->first_node(xmlTag));
+		RdXmlNode* _pXmlElem = static_cast<RdXmlNode*>(xml_node_->first_node(xmlTag));
 		if (_pXmlElem && rapidxml::node_element == _pXmlElem->type()) {
-			xmlElemObj.xmlNode__ = _pXmlElem;
+			xmlElemObj.xml_node_ = _pXmlElem;
 		}
 #endif
 	}
@@ -360,20 +431,19 @@ HMXmlElement HMXmlElement::firstChildElement(LPCSTR xmlTag/* = NULL*/) const
 @func		: nextSiblingElement
 @brief		: Navigate to a sibling node.
 */
-HMXmlElement HMXmlElement::nextSiblingElement(LPCSTR xmlTag/* = NULL*/) const
-{
+HMXmlElement HMXmlElement::nextSiblingElement(const char* xmlTag/* = NULL*/) const {
 	HMXmlElement xmlElemObj;
-	if (xmlNode__) {
+	if (xml_node_) {
 #ifdef YG_USE_TINYXML
 		if (IsValidString(xmlTag)) {
-			xmlElemObj.xmlNode__ = xmlNode__->NextSiblingElement(xmlTag);
+			xmlElemObj.xml_node_ = xml_node_->NextSiblingElement(xmlTag);
 		} else {
-			xmlElemObj.xmlNode__ = xmlNode__->NextSiblingElement();
+			xmlElemObj.xml_node_ = xml_node_->NextSiblingElement();
 		}
 #else
-		RdXmlNode* _pXmlElem = static_cast<RdXmlNode*>(xmlNode__->next_sibling(xmlTag));
+		RdXmlNode* _pXmlElem = static_cast<RdXmlNode*>(xml_node_->next_sibling(xmlTag));
 		if (_pXmlElem && rapidxml::node_element == _pXmlElem->type()) {
-			xmlElemObj.xmlNode__ = _pXmlElem;
+			xmlElemObj.xml_node_ = _pXmlElem;
 		}
 #endif
 	}
@@ -381,39 +451,28 @@ HMXmlElement HMXmlElement::nextSiblingElement(LPCSTR xmlTag/* = NULL*/) const
 }
 
 /*
-@func		: firstAttribute
-@brief		: Sets an attribute of name to a given value. The attribute
-			  will be created if it does not exist, or changed if it does.
+@func			: NewElement
+@brief		:
 */
-HMXmlAttribute HMXmlElement::firstAttribute() const
-{
-	HMXmlAttribute xmlAttribute;
+HMXmlElement HMXmlElement::appendElement(const char* pszTag) {
+  HMXmlElement xmlElemObj;
+  if (xml_node_) {
+    xmlElemObj = document().allocateElement(pszTag);
+    if (xmlElemObj.isValid()) {
 #ifdef YG_USE_TINYXML
-	if (xmlNode__) {
-		TiXmlElement* xmlElem = xmlNode__->ToElement();
-		if (xmlElem) {
-			xmlAttribute.xmlAttr__ = xmlElem->FirstAttribute();
-		}
-	}
 #else
-	if (xmlNode__ && rapidxml::node_element == xmlNode__->type()) {
-		xmlAttribute.xmlAttr__ = static_cast<RdXmlAttribute*>(xmlNode__->first_attribute());
-	}
-#endif
-	//
-	return xmlAttribute;
+      xml_node_->append_node(xmlElemObj.xml_node_);
+#endif // !YG_USE_TINYXML
+    }
+  }
+  return xmlElemObj;
 }
 
+
 //////////////////////////////////////////////////////////////////////////
-// HMXmlDocHandle
-HMXmlDocHandle::HMXmlDocHandle(
-#ifdef YG_USE_TINYXML
-	TiXmlDocument* xmlDoc
-#else
-	RdXmlDocument* xmlDoc
-#endif // !YG_USE_TINYXML
-) : xmlDoc__(xmlDoc), xmlError__(false)
-{
+// HMXmlDocumentBase
+HMXmlDocumentBase::HMXmlDocumentBase(RdXmlDocument* xmlDoc)
+  : xml_doc_(xmlDoc), xml_error_(false) {
 
 }
 
@@ -421,44 +480,58 @@ HMXmlDocHandle::HMXmlDocHandle(
 @func		: isValid
 @brief		: 是否可用。
 */
-bool HMXmlDocHandle::isValid() const
-{
-	return (xmlDoc__ != NULL);
+bool HMXmlDocumentBase::isValid() const {
+	return (xml_doc_ != NULL);
 }
 
 /*
 @func		: isEqual
 @brief		: 是否相同。
 */
-bool HMXmlDocHandle::isEqual(const HMXmlDocHandle& other) const
-{
-	return (xmlDoc__ == other.xmlDoc__);
+bool HMXmlDocumentBase::isEqual(const HMXmlDocumentBase& other) const {
+	return (xml_doc_ == other.xml_doc_);
 }
 
 /*
 @func		: isError
 @brief		:
 */
-bool HMXmlDocHandle::isError() const
-{
-	return xmlError__;
+bool HMXmlDocumentBase::isError() const {
+	return xml_error_;
 }
 
 /*
 @func		: rootElement
 @brief		:
 */
-HMXmlElement HMXmlDocHandle::rootElement(LPCSTR xmlTag/* = NULL*/) const
-{
+HMXmlElement HMXmlDocumentBase::rootElement(const char* xmlTag/* = NULL*/) const {
 	HMXmlElement xmlRoot;
 #ifdef YG_USE_TINYXML
 	if (IsValidString(xmlTag)) {
-		xmlRoot.xmlNode__ = xmlDoc__->FirstChildElement(xmlTag);
+		xmlRoot.xml_node_ = xml_doc_->FirstChildElement(xmlTag);
 	} else {
-		xmlRoot.xmlNode__ = xmlDoc__->RootElement();
+		xmlRoot.xml_node_ = xml_doc_->RootElement();
 	}
 #else
-		xmlRoot.xmlNode__ = static_cast<RdXmlNode*>(xmlDoc__->first_node(xmlTag));
+		RdXmlNode* xml_node = static_cast<RdXmlNode*>(xml_doc_->first_node(xmlTag));
+    if (xml_node && rapidxml::node_element != xml_node->type()) { // 考虑到第一个Node不一定Element，极可能是xml声明结点。
+      do 
+      {
+        xml_node = static_cast<RdXmlNode*>(xml_doc_->first_node(NULL));
+        if (rapidxml::node_element == xml_node->type()) {
+          if (IsValidString(xmlTag)) {
+            if (!strcmp(xmlTag, xml_node->name())) {
+              break;
+            }
+          } else {
+            break;
+          }
+        }
+        // next
+        xml_node = static_cast<RdXmlNode*>(xml_node->next_sibling(NULL));
+      } while (xml_node);
+    }
+    xmlRoot.xml_node_ = xml_node;
 #endif
 	//
 	return xmlRoot;
@@ -468,58 +541,69 @@ HMXmlElement HMXmlDocHandle::rootElement(LPCSTR xmlTag/* = NULL*/) const
 @func		: loadFromString
 @brief		:
 */
-bool HMXmlDocHandle::loadFromString(IN const utf8string xmlString)
-{
+bool HMXmlDocumentBase::loadFromString(const char* xmlString, size_t sz/* = 0*/) {
 #ifdef YG_USE_TINYXML
-	xmlError__ = true;
+	xml_error_ = true;
 	if (IsValidString(xmlString)) {
-		xmlDoc__->Parse((const char*)xmlString, 0, TIXML_ENCODING_UTF8);
-		xmlError__ = xmlDoc__->Error();
+		xml_doc_->Parse((const char*)xmlString, 0, TIXML_ENCODING_UTF8);
+		xml_error_ = xml_doc_->Error();
 	}
 #else
-	char*p = xmlDoc__->allocate_string(xmlString);
-	xmlError__ = false;
+  // YY Browser Begin
+  // Modified by Von @2014-2-10 19:25:22 
+	char*p = xml_doc_->allocate_string(xmlString, sz ? sz + 1 : 0);
+  if (sz != 0) {
+    p[sz] = '\0';
+  }
+  // YY Browser End
+	xml_error_ = false;
 	try {
-		xmlDoc__->parse<rapidxml::parse_trim_whitespace|rapidxml::parse_validate_closing_tags|rapidxml::parse_no_element_values>((char*)p);
+		xml_doc_->parse<rapidxml::parse_trim_whitespace|rapidxml::parse_validate_closing_tags|rapidxml::parse_no_element_values|rapidxml::parse_pi_nodes>((char*)p);
 	} catch (rapidxml::parse_error* e) {
 #ifdef _DEBUG
 		e->what();
 #else
 		(void)e;
 #endif // _DEBUG
-		xmlError__ = true;
+		xml_error_ = true;
 	} catch (...) {
-		xmlError__ = true;
+		xml_error_ = true;
 	}
 #endif
 	//
-	return !xmlError__;
+	return !xml_error_;
+}
+
+/*
+@func			:  allocateElement
+@brief		:
+*/
+HMXmlElement HMXmlDocumentBase::allocateElement(const char* pszTag) {
+  HMXmlElement xmlElemObj;
+#ifdef YG_USE_TINYXML
+
+#else
+  const char* my_tag = xml_doc_->allocate_string(pszTag);
+  xmlElemObj.xml_node_ = static_cast<RdXmlNode*>(xml_doc_->allocate_node(rapidxml::node_element, my_tag));
+#endif // !YG_USE_TINYXML
+  return xmlElemObj;
+}
+
+/*
+@func			: print
+@brief		:
+*/
+void HMXmlDocumentBase::print(std::string& out) {
+  if (xml_doc_) {
+    out.assign("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+    rootElement().print(out);
+  }
 }
 
 //////////////////////////////////////////////////////////////////////////
 // HMXmlDocument
 HMXmlDocument::HMXmlDocument()
-#ifdef YG_USE_TINYXML
-	: HMXmlDocHandle(new TiXmlDocument)
-#else
-	: HMXmlDocHandle(new RdXmlDocument)
-#endif // !YG_USE_TINYXML
-{
-
-}
-
-HMXmlDocument::~HMXmlDocument()
-{
-	if (xmlDoc__) {
-		delete xmlDoc__;
-	}
-}
-
-//////////////////////////////////////////////////////////////////////////
-// HMXmlDocument2
-HMXmlDocument2::HMXmlDocument2()
-	: HMXmlDocHandle(NULL)
-{
+	: HMXmlDocumentBase(NULL) {
 #ifdef YG_USE_TINYXML
 	// sizeof(TiXmlDocument) = 72
 	char error_msg[STORAGESIZE < sizeof(TiXmlDocument) ? -1 : 1];
@@ -527,32 +611,31 @@ HMXmlDocument2::HMXmlDocument2()
 	#ifdef new
 		#pragma push_macro("new")
 		#undef new
-		xmlDoc__ = ::new (fStorage__) TiXmlDocument();
+		xml_doc_ = ::new (storage__) TiXmlDocument();
 		#pragma pop_macro("new")
 	#else
-		xmlDoc__ = ::new (fStorage__) TiXmlDocument();
+		xml_doc_ = ::new (storage__) TiXmlDocument();
 	#endif // new
 #else
-	// sizeof(RdXmlDocument) = 32836
+	// sizeof(RdXmlDocument) = 65604
 	char error_msg[STORAGESIZE < sizeof(RdXmlDocument) ? -1 : 1];
 	error_msg[0];
 	#ifdef new
 		#pragma push_macro("new")
 		#undef new
-		xmlDoc__ = ::new (fStorage__) RdXmlDocument();
+		xml_doc_ = ::new (storage__) RdXmlDocument();
 		#pragma pop_macro("new")
 	#else
-		xmlDoc__ = ::new (fStorage__) RdXmlDocument();
+		xml_doc_ = ::new (storage__) RdXmlDocument();
 	#endif // new
 #endif // !YG_USE_TINYXML
 }
 
-HMXmlDocument2::~HMXmlDocument2()
-{
+HMXmlDocument::~HMXmlDocument() {
 #ifdef YG_USE_TINYXML
-	xmlDoc__->~TiXmlDocument();
+	xml_doc_->~TiXmlDocument();
 #else
-	xmlDoc__->~RdXmlDocument();
+	xml_doc_->~RdXmlDocument();
 #endif // !YG_USE_TINYXML
 }
 
